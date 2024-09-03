@@ -1,0 +1,12 @@
+name: projet_clustal
+channels:
+    - conda-forge
+    - bioconda
+    - nodefaults
+dependencies:
+    - biopython
+    - matplotlib
+    - python
+    - pycodestyle
+    - pydocstyle
+    - pylint
