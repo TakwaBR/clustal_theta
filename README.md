@@ -1,1 +1,1 @@
-# projet_clustal_m2
+# Projet court - ALIGNEMENT MULTIPLE HEURISTIQUE PAR LA METHODE CLUSTAL
