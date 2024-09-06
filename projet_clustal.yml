@@ -6,7 +6,10 @@ channels:
 dependencies:
     - biopython
     - matplotlib
+    - numpy
+    - pandas
     - python
     - pycodestyle
     - pydocstyle
     - pylint
+    - scipy
