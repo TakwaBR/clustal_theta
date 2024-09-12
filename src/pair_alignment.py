@@ -53,7 +53,7 @@ from Bio import SeqIO
 import re
 import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import dendrogram, linkage
-import upgma
+import upgma as up
 
 # Loading the fasta file and the Blosum62 matrix
 FASTA_FILE = "../data/p53_sequences.fasta"
@@ -275,17 +275,13 @@ def align_all_pairs():
     organismes = []
     for i in range(len(SEQUENCES)):
         # Extract organism abbreviation from the sequence description
-        description_i = SEQUENCES[i].description
-        organism_match_i = re.search(r"\[(.*?)\]", description_i)
-        organism_i = organism_match_i.group(1)
-        organismes.append(organism_i[0:2])
+        id_i = SEQUENCES[i].id
+        organismes.append(id_i)
         for j in range(i + 1, len(SEQUENCES)):
             # Perform pairwise alignment for sequences i and j
             print(f"#######################################################\n")
-            description_j = SEQUENCES[j].description
-            organism_match_j = re.search(r"\[(.*?)\]", description_j)
-            organism_j = organism_match_j.group(1)
-            print(f"Pair alignment between {organism_i} and {organism_j}\n")
+            id_j = SEQUENCES[j].id
+            print(f"Pair alignment between {id_i} and {id_j}\n")
             score_matrix, aligned_seq1, aligned_seq2 = pair_alignment(i, j)
             # Store the final score from the score matrix in the score_matrix
             all_score_matrix[i, j] = score_matrix[-1, -1]
@@ -304,8 +300,7 @@ def align_all_pairs():
 
 if __name__ == "__main__":
     distance_matrix = align_all_pairs()
-    linkage_mat = upgma.hierarchical_clustering(distance_matrix)
-
+    linkage_mat, clusters = up.hierarchical_clustering(distance_matrix)
     plt.figure(figsize=(10, 7))
     dendrogram(linkage_mat, labels=['Ho', 'Po', 'Go', 'No', 'Hy', 'Rh', 'Tr', 'Ch', 'Pi', 'Ma'])
     plt.title("Dendrogramme")
